@@ -1,4 +1,4 @@
-name: React.js Build, Test, and Docker Push
+name: React.js Test and Docker Build/Push
 
 on:
   push:
@@ -9,7 +9,8 @@ on:
       - main
 
 jobs:
-  build-test-push:
+  # Step 1: Testing
+  test:
     runs-on: ubuntu-20.04
 
     steps:
@@ -32,6 +33,16 @@ jobs:
       - name: Run Jest Tests
         run: |
           npm test -- --ci --coverage
+
+  # Step 2: Build and Push Docker Image
+  build-and-push:
+    runs-on: ubuntu-20.04
+    needs: test # This ensures the test step runs first and must pass.
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       # Log in to Docker Hub
       - name: Log in to Docker Hub
