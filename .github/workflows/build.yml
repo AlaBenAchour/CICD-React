@@ -100,7 +100,7 @@ jobs:
       # Run RTL tests
       - name: Run React Testing Library Tests
         run: |
-          npm run test -- --ci --coverage --testPathPattern=src/__tests__/ # Optionally, specify your test folder
+          npm run test -- --ci --coverage --testPathPattern=src/**/*.test.js
 
   # Step 2: Build and Push Docker Image
   build-and-push:
